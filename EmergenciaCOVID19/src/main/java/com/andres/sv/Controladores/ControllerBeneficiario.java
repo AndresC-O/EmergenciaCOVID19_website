@@ -56,7 +56,7 @@ public class ControllerBeneficiario extends HttpServlet {
 			response.sendRedirect("index.jsp");
 			session.invalidate();
 		} else {
-			String dui = request.getParameter("dui");
+			String dui = request.getParameter("caja");
 			Persona person = new Persona();
 			person.setDUI(dui);
 			clsConsultarDUI consultaDUI = new clsConsultarDUI();
@@ -72,10 +72,13 @@ public class ControllerBeneficiario extends HttpServlet {
 
 			} else if (soybeneficiario == 1) {
 
-				response.sendRedirect("SoyBeneficiario.jsp");
-				session.setAttribute("beneficiario", soybeneficiario);
-				session.setAttribute("fullname", fullname);
-				System.out.println("Nombre del Beneficiario: " + fullname);
+				//response.sendRedirect("SoyBeneficiario.jsp");
+				Gson json = new Gson();
+				response.getWriter().append(json.toJson(fullname));
+				
+				//session.setAttribute("beneficiario", soybeneficiario);
+				//session.setAttribute("fullname", fullname);
+				//System.out.println("Nombre del Beneficiario: " + fullname);
 			}
 		}
 	}

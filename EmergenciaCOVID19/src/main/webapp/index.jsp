@@ -4,6 +4,7 @@
 <html>
 
 <head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <meta charset="utf-8">
 <title>Emergencia COVID-19</title>
 <link rel="icon" href="Imagenes/virus.ico">
@@ -17,6 +18,10 @@
 	rel="stylesheet"
 	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
 	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+	crossorigin="anonymous"></script>
 </head>
 
 <body class="bbody">
@@ -27,6 +32,33 @@
 	<br>
 	<br>
 	<br>
+	<script type="text/javascript">
+			$(document).ready(function () {		
+				$("#btn").click(function (){
+					
+					var caja = $("#duip").val();
+					
+					$.post('ControllerBeneficiario', {
+						//Envio de datos a js
+						caja
+					}, function (response) {
+						var modificaH = document.getElementById('mod');		
+						
+						try{
+							console.log(response);
+							modificaH.innerHTML = JSON.parse(response) + ", eres beneficiario de los $300.00";
+							/*let datos = JSON.parse(response);
+							for(item of datos){
+								
+							}	*/
+						}
+						catch(err){
+							modificaH.innerHTML = "No eres beneficiario de los $300.00";
+						}
+					});
+				});
+			});
+		</script>
 	<p class="pintro">
 		<strong> Consulta quién de tú familia es beneficiario del
 			apoyo <br>económico para alimentación en la emergencia
@@ -37,12 +69,17 @@
 	</p>
 	<br>
 	<br>
-	<form action="ControllerBeneficiario" method="post">
-		<input type="text" name="dui"
-			placeholder="Ingresa tú número de DUI 00000000-0" class="field"
-			required> <input type="submit" value="CONSULTAR"
-			class="consultar">
-	</form>
+
+	<center>
+		<div class="allinputs">
+			<input type="text" name="dui" id="duip"
+				placeholder="Ingresa tú número de DUI 00000000-0" class="field"
+				required> <input type="submit" value="CONSULTAR"
+				class="consultar" id="btn" data-bs-toggle="modal"
+				data-bs-target="#exampleModal">
+		</div>
+	</center>
+
 	<br>
 	<br>
 	<br>
@@ -52,6 +89,28 @@
 			Dicho beneficio <br>corresponde a $300.00 por vivienda.
 		</strong>
 	</p>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Consulta DUI</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h1 id="mod"></h1>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

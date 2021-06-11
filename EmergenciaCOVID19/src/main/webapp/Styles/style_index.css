@@ -37,6 +37,13 @@
 	border-radius: 20px;
 }
 
+.allinputs{
+	display: inline;
+	margin: 0 auto;
+	align-content: center;
+	padding: 10px;
+}
+
 form {
 	font-family: "Montserrat", sans-serif;
 	display: block;
